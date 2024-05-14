@@ -1,0 +1,129 @@
+﻿@model PrecisionPoint.Connector.Model.ConnectionViewModel
+@using PrecisionPoint.Connector.Utility.Enums;
+@{
+    var mode = (Mode)ViewData["mode"];
+}
+
+<hr />
+<div class="row">
+    <div class="col" id="businessCentralFields">
+        <form asp-action="CreateSourceSetting" class="d-flex flex-wrap w-100 justify-content-between create-conn-form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="mode" id="SourceSetting_Mode" value=@mode />
+            <input type="hidden" asp-for="SourceSetting.SourceSettingsId" />
+                <div class="custom-form-item">
+                     <label asp-for="SourceSetting.ConnectorTypeId" class="control-label"></label>
+                    <select asp-for="SourceSetting.ConnectorTypeId" class="form-control form-select connector-dropdown" asp-items="@Model.SourceSetting.ConnectorTypesList?.Select(c => new SelectListItem { Value = c.ConnectorTypeId.ToString(), Text = c.ConnectorTypeName })">
+                    </select>
+                    <span asp-validation-for="SourceSetting.ConnectorTypeId" class="text-danger"></span>
+                </div>
+                <div class="custom-form-item">
+                    <label asp-for="SourceSetting.ServerUrl" class="control-label"></label>
+                    <input asp-for="SourceSetting.ServerUrl" class="form-control" />
+                    <span asp-validation-for="SourceSetting.ServerUrl" class="text-danger"></span>
+                </div>
+                <div class="custom-form-item">
+                    <label asp-for="SourceSetting.Port" class="control-label"></label>
+                    <input asp-for="SourceSetting.Port" class="form-control" />
+                    <span asp-validation-for="SourceSetting.Port" class="text-danger"></span>
+                </div>
+                <div class="custom-form-item">
+                    <label asp-for="SourceSetting.EnvironmentName" class="control-label"></label>
+                    <input asp-for="SourceSetting.EnvironmentName" class="form-control" />
+                    <span asp-validation-for="SourceSetting.EnvironmentName" class="text-danger"></span>
+                </div>
+                <div class="custom-form-item">
+                    <label asp-for="SourceSetting.CompanyId" class="control-label"></label>
+                    <input asp-for="SourceSetting.CompanyId" class="form-control" />
+                    <span asp-validation-for="SourceSetting.CompanyId" class="text-danger"></span>
+                </div>
+                <div class="custom-form-item">
+                    <label asp-for="SourceSetting.CompanyName" class="control-label"></label>
+                    <input asp-for="SourceSetting.CompanyName" class="form-control" />
+                    <span asp-validation-for="SourceSetting.CompanyName" class="text-danger"></span>
+                </div>
+                <div class="custom-form-item">
+                    <label asp-for="SourceSetting.SourceClientId" class="control-label"></label>
+                    <input asp-for="SourceSetting.SourceClientId" class="form-control" />
+                    <span asp-validation-for="SourceSetting.SourceClientId" class="text-danger"></span>
+                </div>
+                <div class="custom-form-item">
+                    <label asp-for="SourceSetting.ClientSecret" class="control-label"></label>
+                    <input asp-for="SourceSetting.ClientSecret" class="form-control" style="-webkit-text-security: disc;" />
+                    <span asp-validation-for="SourceSetting.ClientSecret" class="text-danger"></span>
+                </div>
+                <div class="custom-form-item">
+                    <label asp-for="SourceSetting.AadTenantId" class="control-label"></label>
+                    <input asp-for="SourceSetting.AadTenantId" class="form-control" />
+                    <span asp-validation-for="SourceSetting.AadTenantId" class="text-danger"></span>
+                </div>
+                <div class="custom-form-item">
+                    <label asp-for="SourceSetting.SourceDescription" class="control-label"></label>
+                    <input asp-for="SourceSetting.SourceDescription" class="form-control source-description" />
+                    <span asp-validation-for="SourceSetting.SourceDescription" class="text-danger source-description"></span>
+                </div>
+            
+                <div class="text-end w-100">
+                <a href="@Url.Action("GoToPrevious", "Connection", new { tabId = ConnectionTab.Information, mode = mode})" class="btn btn-primary pp-btn pp-btn-primary-outline">Previous</a>
+                <input type="submit" value="Next" class="btn btn-primary pp-btn pp-btn-primary" />
+                </div>
+        </form>
+    </div>
+    <div class="col" id="dataLakeFields">
+        <form asp-action="CreateSourceSetting" class="d-flex flex-wrap w-100 justify-content-between create-conn-form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="mode" id="SourceSetting_Mode" value=@mode />
+            <input type="hidden" asp-for="SourceSetting.SourceSettingsId" />
+                <div class="custom-form-item">
+                    <label asp-for="SourceSetting.ConnectorTypeId" class="control-label"></label>
+                <select asp-for="SourceSetting.ConnectorTypeId" class="form-control form-select connector-dropdown" asp-items="@Model.SourceSetting.ConnectorTypesList?.Select(c => new SelectListItem { Value = c.ConnectorTypeId.ToString(), Text = c.ConnectorTypeName })">
+                    </select>
+                    <span asp-validation-for="SourceSetting.ConnectorTypeId" class="text-danger"></span>
+                </div>
+                <div class="custom-form-item">
+                    <label asp-for="SourceSetting.AccountName" class="control-label"></label>
+                    <input asp-for="SourceSetting.AccountName" class="form-control" />
+                    <span asp-validation-for="SourceSetting.AccountName" class="text-danger"></span>
+                </div>
+                <div class="custom-form-item">
+                    <label asp-for="SourceSetting.KeyType" class="control-label"></label>
+                    <select asp-for="SourceSetting.KeyType" class="form-control key-dropdown">
+                        <option value="1">Account Key</option>
+                        <option value="2">Shared Access Signature</option>
+                    </select>
+                </div>
+                <div class="custom-form-item" id="accountKey">
+                    <label asp-for="SourceSetting.AccountKey" class="control-label"></label>
+                    <input asp-for="SourceSetting.AccountKey" class="form-control" style="-webkit-text-security: disc;" />
+                    <span asp-validation-for="SourceSetting.AccountKey" class="text-danger"></span>
+                </div>
+                <div class="custom-form-item" id="sharedAccessSignature">
+                    <label asp-for="SourceSetting.SharedAccessSignature" class="control-label"></label>
+                    <input asp-for="SourceSetting.SharedAccessSignature" class="form-control" style="-webkit-text-security: disc;" />
+                    <span asp-validation-for="SourceSetting.SharedAccessSignature" class="text-danger"></span>
+                </div>
+                <div class="custom-form-item">
+                    <label asp-for="SourceSetting.Container" class="control-label"></label>
+                    <input asp-for="SourceSetting.Container" class="form-control" />
+                    <span asp-validation-for="SourceSetting.Container" class="text-danger"></span>
+                </div>
+                <div class="custom-form-item">
+                    <label asp-for="SourceSetting.Directory" class="control-label"></label>
+                    <input asp-for="SourceSetting.Directory" class="form-control" />
+                    <span asp-validation-for="SourceSetting.Directory" class="text-danger"></span>
+                </div>
+                <div class="custom-form-item">
+                    <label asp-for="SourceSetting.SourceDescription" class="control-label"></label>
+                    <input asp-for="SourceSetting.SourceDescription" class="form-control source-description" />
+                    <span asp-validation-for="SourceSetting.SourceDescription" class="text-danger source-description"></span>
+                </div>
+            
+                <div class="text-end w-100">
+                <a href="@Url.Action("GoToPrevious", "Connection", new { tabId = ConnectionTab.Information, mode = mode})" class="btn btn-primary pp-btn pp-btn-primary-outline">Previous</a>
+                <input type="submit" value="Next" class="btn btn-primary pp-btn pp-btn-primary" />
+                </div>
+        </form>
+    </div>
+</div>
+
+
