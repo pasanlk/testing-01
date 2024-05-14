@@ -1,0 +1,70 @@
+﻿@using PrecisionPoint.Connector.Utility.Enums
+@model IEnumerable<PrecisionPoint.Connector.Model.ConnectionsModel>
+
+@{
+    int sort;
+
+    if (TempData.ContainsKey("SortingOrder"))
+    {
+        sort = (int)TempData["sortingOrder"];
+    }
+    else
+    {
+        sort = (int)SortingOrder.Default;
+    }
+}
+
+<div class="submain-page">
+    <h3 class="page-table-title">Connections</h3>
+
+    <div class="submain-container connection-list-container">
+        <div class="container add-btn-connection pr-0">
+            <a href="@Url.Action("CreateConnection", "Connection")" class="d-flex align-items-center pp-btn pp-btn-primary">
+                <img src="~/img/add-btn-icon.svg" alt="add-icon" class="add-icon" />
+                <b>Add</b>
+            </a>
+        </div>
+        <div class="conn-list-table">
+            <table id="connectionsTable" class="table table-striped table-connection display responsive w-100" data-sortingorder="@sort">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Id)</th>
+                        <th>@Html.DisplayNameFor(model => model.ClientName)</th>
+                        <th>@Html.DisplayNameFor(model => model.Name)</th>
+                        <th>@Html.DisplayNameFor(model => model.Database)</th>
+                        <th>@Html.DisplayNameFor(model => model.Server)</th>
+                        <th>@Html.DisplayNameFor(model => model.Reseller)</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var connection in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => connection.Id)</td>
+                            <td class="pp-word-break">@Html.DisplayFor(modelItem => connection.ClientName)</td>
+                            <td class="pp-word-break">@Html.DisplayFor(modelItem => connection.Name)</td>
+                            <td class="pp-word-break">@Html.DisplayFor(modelItem => connection.Database)</td>
+                            <td class="pp-word-break">@Html.DisplayFor(modelItem => connection.Server)</td>
+                            <td class="pp-word-break">@Html.DisplayFor(modelItem => connection.Reseller)</td>
+                            <td class="pp-word-break"><a asp-controller="Connection" asp-route-id="@connection.Id" class="table-custom-links">View</a></td>
+                            @if (connection.IsRunSetupExecuted)
+                            {
+                                <td><a asp-controller="Configuration" asp-route-id="@connection.Id" class="table-custom-links">Configure</a></td>
+                                <td><a asp-controller="Action" class="table-custom-links">Action</a> </td>
+                            }
+                            else
+                            {
+                                <td><a href="/" onclick="return false;" class="table-custom-links disabled">Configure</a></td>
+                                <td><a asp-controller="Action" asp-action="RunSetup" class="table-custom-links">Action</a> </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
